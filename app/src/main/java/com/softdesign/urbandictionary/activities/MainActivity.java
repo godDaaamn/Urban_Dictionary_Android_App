@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 
 import com.softdesign.urbandictionary.R;
+import com.softdesign.urbandictionary.utils.App;
 import com.softdesign.urbandictionary.utils.SpacesItemDecoration;
 import com.softdesign.urbandictionary.adapters.WordAdapter;
 import com.softdesign.urbandictionary.api.UrbanDictionaryApi;
@@ -40,7 +41,6 @@ import static android.view.KeyEvent.KEYCODE_ENTER;
 public class MainActivity extends AppCompatActivity {
 EditText definiton_et;
 RecyclerView mRecyclerView;
-UrbanDictionaryApi mUrbanDictionaryApi;
 ImageButton seatch_bt;
 WordAdapter mWordAdapter;
 ProgressBar mProgressBar;
@@ -58,19 +58,7 @@ Toolbar toolbar;
 
 
 
-        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
-        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(httpLoggingInterceptor)
-                .build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://urbanscraper.herokuapp.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(okHttpClient)
-                .build();
-        mUrbanDictionaryApi = retrofit.create(UrbanDictionaryApi.class);
 
 
         definiton_et.setOnKeyListener(new View.OnKeyListener() {
@@ -102,7 +90,7 @@ Toolbar toolbar;
     }
 
     private void searchDefinitions(){
-        Call<List<Word>> call = mUrbanDictionaryApi.get(definiton_et.getText().toString().toLowerCase());
+        Call<List<Word>> call = App.getApi().get(definiton_et.getText().toString().toLowerCase());
         mProgressBar.setVisibility(ProgressBar.VISIBLE);
         call.enqueue(new Callback<List<Word>>() {
             @Override
