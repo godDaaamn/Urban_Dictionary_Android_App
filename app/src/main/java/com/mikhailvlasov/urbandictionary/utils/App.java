@@ -1,8 +1,8 @@
-package com.softdesign.urbandictionary.utils;
+package com.mikhailvlasov.urbandictionary.utils;
 
 import android.app.Application;
 
-import com.softdesign.urbandictionary.api.UrbanDictionaryApi;
+import com.mikhailvlasov.urbandictionary.api.UrbanDictionaryApi;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

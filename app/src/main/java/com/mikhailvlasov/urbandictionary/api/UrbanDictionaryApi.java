@@ -1,13 +1,12 @@
-package com.softdesign.urbandictionary.api;
+package com.mikhailvlasov.urbandictionary.api;
 
-import com.softdesign.urbandictionary.api.models.Word;
+import com.mikhailvlasov.urbandictionary.api.models.Word;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 public interface UrbanDictionaryApi {
     @GET("search/{word}")

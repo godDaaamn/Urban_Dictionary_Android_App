@@ -1,4 +1,4 @@
-package com.softdesign.urbandictionary;
+package com.mikhailvlasov.urbandictionary;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.softdesign.urbandictionary", appContext.getPackageName());
+        assertEquals("com.mikhailvlasov.urbandictionary", appContext.getPackageName());
     }
 }

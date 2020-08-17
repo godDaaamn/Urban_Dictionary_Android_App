@@ -1,12 +1,12 @@
-package com.softdesign.urbandictionary.activities;
+package com.mikhailvlasov.urbandictionary.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,36 +15,31 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 
-import com.softdesign.urbandictionary.R;
-import com.softdesign.urbandictionary.utils.App;
-import com.softdesign.urbandictionary.utils.SpacesItemDecoration;
-import com.softdesign.urbandictionary.adapters.WordAdapter;
-import com.softdesign.urbandictionary.api.UrbanDictionaryApi;
-import com.softdesign.urbandictionary.api.models.Word;
+import com.google.android.material.snackbar.Snackbar;
+import com.mikhailvlasov.urbandictionary.R;
+import com.mikhailvlasov.urbandictionary.utils.App;
+import com.mikhailvlasov.urbandictionary.adapters.WordAdapter;
+import com.mikhailvlasov.urbandictionary.api.models.Word;
 
 import java.util.List;
-import java.util.Map;
 
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.view.KeyEvent.KEYCODE_ENTER;
 
 public class MainActivity extends AppCompatActivity {
 EditText definiton_et;
 RecyclerView mRecyclerView;
+RecyclerView.LayoutManager mLayoutManager;
 ImageButton seatch_bt;
 WordAdapter mWordAdapter;
 ProgressBar mProgressBar;
 Toolbar toolbar;
+View main_activity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +49,10 @@ Toolbar toolbar;
         definiton_et = findViewById(R.id.definition_et);
         mProgressBar = findViewById(R.id.progressBar);
         mRecyclerView = findViewById(R.id.recyclerView);
-        mRecyclerView.addItemDecoration(new SpacesItemDecoration(15));
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        main_activity = findViewById(R.id.main);
+
 
 
 
@@ -97,20 +95,22 @@ Toolbar toolbar;
             public void onResponse(Call<List<Word>> call, Response<List<Word>> response) {
                 if(!response.isSuccessful()) {
                     mProgressBar.setVisibility(ProgressBar.INVISIBLE);
-                    Toast toast = Toast.makeText(getApplicationContext(),
+                    Snackbar.make(
+                            main_activity,
                             "Something went wrong",
-                            Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.CENTER, 0, 0);
-                    toast.show();
+                            Snackbar.LENGTH_SHORT
+                    ).show();
                 }
                 List<Word> list = response.body();
                 if(list.isEmpty()){
                     mProgressBar.setVisibility(ProgressBar.INVISIBLE);
-                    Toast toast = Toast.makeText(getApplicationContext(),"Nothing found",Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER, 0, 0);
-                    toast.show();
+                    Snackbar.make(
+                            main_activity,
+                            "Nothing found",
+                            Snackbar.LENGTH_SHORT
+                    ).show();
                 }else{
-                    mWordAdapter = new WordAdapter(list,MainActivity.this);
+                    mWordAdapter = new WordAdapter(list);
                     mRecyclerView.setAdapter(mWordAdapter);
                     mProgressBar.setVisibility(ProgressBar.INVISIBLE);
                 }
@@ -124,8 +124,5 @@ Toolbar toolbar;
         });
 
     }
-
-
-
 
 }

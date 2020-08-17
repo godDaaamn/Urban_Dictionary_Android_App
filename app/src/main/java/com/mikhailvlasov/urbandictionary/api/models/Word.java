@@ -1,4 +1,4 @@
-package com.softdesign.urbandictionary.api.models;
+package com.mikhailvlasov.urbandictionary.api.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

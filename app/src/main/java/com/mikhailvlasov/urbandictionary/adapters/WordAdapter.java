@@ -1,4 +1,4 @@
-package com.softdesign.urbandictionary.adapters;
+package com.mikhailvlasov.urbandictionary.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,9 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.softdesign.urbandictionary.activities.MainActivity;
-import com.softdesign.urbandictionary.R;
-import com.softdesign.urbandictionary.api.models.Word;
+import com.mikhailvlasov.urbandictionary.R;
+import com.mikhailvlasov.urbandictionary.api.models.Word;
 
 
 import java.util.ArrayList;
@@ -18,21 +17,19 @@ import java.util.List;
 
 public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder> {
     private List<Word> mWordList = new ArrayList<>();
-    MainActivity mActivity;
 
-    public WordAdapter(List<Word> wordList, MainActivity activity) {
+
+    public WordAdapter(List<Word> wordList) {
         mWordList = wordList;
-        mActivity = activity;
+
     }
 
     @NonNull
     @Override
     public WordViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View wordListLayout = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, null);
-        RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        wordListLayout.setLayoutParams(lp);
-        WordViewHolder wordViewHolder = new WordViewHolder(wordListLayout);
-        return wordViewHolder;
+        View wordListLayout = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent,false);
+        WordViewHolder mWordViewHolder = new WordViewHolder(wordListLayout);
+        return mWordViewHolder;
     }
 
     @Override
@@ -47,7 +44,7 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
     }
 
     public class WordViewHolder extends RecyclerView.ViewHolder{
-        TextView term,definition,example;
+        TextView term,definition;
         public WordViewHolder(View itemView) {
             super(itemView);
             term = itemView.findViewById(R.id.term_tv);

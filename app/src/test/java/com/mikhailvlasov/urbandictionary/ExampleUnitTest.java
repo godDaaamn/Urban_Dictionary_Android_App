@@ -1,4 +1,4 @@
-package com.softdesign.urbandictionary;
+package com.mikhailvlasov.urbandictionary;
 
 import org.junit.Test;
 
